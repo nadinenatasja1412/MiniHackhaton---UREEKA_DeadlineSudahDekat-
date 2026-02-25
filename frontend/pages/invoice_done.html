@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Invoice Created</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-title">Your <span style="color:#0c647f">Invoice is Made!</span></div>
+      <div class="divider"></div>
+
+      <div class="info" id="invoiceInfo"></div>
+
+      <div class="field-group">
+        <label>Payment Link:</label>
+        <div class="link-box">
+          <span id="paymentLinkText"></span>
+          <span class="copy-btn" id="copyLinkBtn">Copy</span>
+        </div>
+      </div>
+
+      <button class="btn btn-block" onclick="location.href='invoice_new.html'">
+        Remake it
+      </button>
+      <br />
+      <button class="btn btn-secondary btn-block" onclick="location.href='home.html'">
+        Back to Home
+      </button>
+    </div>
+
+    <script src="../invoice_done.js"></script>
+  </body>
+  </html>
+
+

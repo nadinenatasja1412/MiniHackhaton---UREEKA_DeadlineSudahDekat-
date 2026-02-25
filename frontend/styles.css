@@ -1,0 +1,151 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+}
+
+.page {
+  max-width: 1040px;
+  margin: 32px auto;
+  padding: 0 32px 40px;
+  background: transparent;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #094c63;
+  font-weight: 700;
+}
+
+.divider {
+  height: 1px;
+  background: #e0e6ed;
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #222;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background-color: #0c647f;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  color: #0c647f;
+  border: 1px solid #0c647f;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu .btn {
+  justify-content: flex-start;
+}
+
+.status-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.status-table th,
+.status-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.status-pill-paid {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.status-pill-warning {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.status-pill-danger {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.info {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.link-box {
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding: 10px 12px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-btn {
+  cursor: pointer;
+  font-size: 12px;
+  color: #0c647f;
+}
+
+.alert {
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.alert-success {
+  color: #166534;
+}
+
+.alert-error {
+  color: #b91c1c;
+}
+
+

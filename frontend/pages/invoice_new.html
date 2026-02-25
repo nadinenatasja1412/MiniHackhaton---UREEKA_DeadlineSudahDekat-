@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Invoice</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-title">What kind of <span style="color:#0c647f">Invoice?</span></div>
+      <div class="divider"></div>
+
+      <div id="invoice-alert" class="alert"></div>
+
+      <div class="field-group">
+        <label>Customer Name:</label>
+        <input id="customerName" placeholder="Type your customer name..." />
+      </div>
+      <div class="field-group">
+        <label>Customer Address:</label>
+        <input id="customerAddress" placeholder="Type your customer address..." />
+      </div>
+      <div class="field-group">
+        <label>Customer Email:</label>
+        <input id="customerEmail" type="email" placeholder="Type your customer email..." />
+      </div>
+      <div class="field-group">
+        <label>Telephone Number:</label>
+        <input id="phone" placeholder="Fill with number. If there is none, type 0" />
+      </div>
+      <div class="field-group">
+        <label>Fill in the items and prices (free text):</label>
+        <textarea
+          id="rawText"
+          placeholder="Example: A chair 500; Table 300; Service fee 100"
+        ></textarea>
+      </div>
+      <div class="field-group">
+        <label>Discount:</label>
+        <input id="discount" value="0" />
+      </div>
+
+      <button class="btn btn-block" id="createInvoiceBtn">Create an Invoice</button>
+      <br />
+      <button class="btn btn-secondary btn-block" onclick="location.href='home.html'">
+        Back to Home
+      </button>
+    </div>
+
+    <script src="../invoice_new.js"></script>
+  </body>
+  </html>
+
+

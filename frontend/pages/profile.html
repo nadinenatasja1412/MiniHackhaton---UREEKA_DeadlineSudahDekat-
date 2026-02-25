@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-title">Profile Page</div>
+      <div class="divider"></div>
+
+      <div id="profile-alert" class="alert"></div>
+
+      <div class="field-group">
+        <label>Company Name:</label>
+        <input id="companyName" placeholder="Type your company name..." />
+      </div>
+      <div class="field-group">
+        <label>Company Address:</label>
+        <input id="companyAddress" placeholder="Type your company address..." />
+      </div>
+      <div class="field-group">
+        <label>Company Email:</label>
+        <input id="companyEmail" type="email" placeholder="Type your company email..." />
+      </div>
+      <div class="field-group">
+        <label>Company Phone:</label>
+        <input id="companyPhone" placeholder="Type your company phone..." />
+      </div>
+
+      <button class="btn btn-block" id="saveProfileBtn">Save Data</button>
+      <br />
+      <button class="btn btn-secondary btn-block" onclick="location.href='home.html'">
+        Back to Home
+      </button>
+    </div>
+
+    <script src="../profile.js"></script>
+  </body>
+  </html>
+
+
