@@ -50,16 +50,3 @@ export const login = (req: Request, res: Response) => {
     }
   );
 };
-
-export const regEmployee = async (req: Request, res: Response) => {
-  const { name, jabatan, salary } = req.body;
-  db.query(
-    "INSERT INTO msEmployee (name, jabatan, salary) VALUES (?, ?, ?)",
-    [name, jabatan, salary],
-    (err) => {
-      if (err) return res.json({ message: "Karyawan sudah ada" });
-
-      res.json({ message: "Register karyawan sukses" });
-    }
-  );
-};
