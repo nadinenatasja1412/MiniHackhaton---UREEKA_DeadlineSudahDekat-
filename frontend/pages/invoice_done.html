@@ -13,19 +13,32 @@
       <div class="info" id="invoiceInfo"></div>
 
       <div class="field-group">
-        <label>Payment Link:</label>
-        <div class="link-box">
-          <span id="paymentLinkText"></span>
-          <span class="copy-btn" id="copyLinkBtn">Copy</span>
+        <label>Invoice PDF:</label>
+        <div class="link-box" id="pdfCard">
+          <span id="pdfFileName">Invoice.pdf</span>
+          <span class="copy-btn" id="openPdfBtn">Open</span>
         </div>
       </div>
 
-      <button class="btn btn-block" onclick="location.href='invoice_new.html'">
+      <div class="field-group">
+        <label>Preview:</label>
+        <iframe
+          id="pdfViewer"
+          style="width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 6px;"
+        ></iframe>
+      </div>
+
+      <div class="field-group">
+        <label>Due Date:</label>
+        <input id="dueDateInput" type="date" />
+      </div>
+
+      <button class="btn btn-block" id="remakeBtn">
         Remake it
       </button>
       <br />
-      <button class="btn btn-secondary btn-block" onclick="location.href='home.html'">
-        Back to Home
+      <button class="btn btn-secondary btn-block" id="createPaymentBtn">
+        Create Payment Link
       </button>
     </div>
 
