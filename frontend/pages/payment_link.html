@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payment Link Generated</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-title">Payment Link is <span style="color:#0c647f">Generated!</span></div>
+      <div class="divider"></div>
+
+      <div class="info" id="paymentInfo"></div>
+
+      <div class="field-group">
+        <label>Here's the payment link for your client:</label>
+        <div class="link-box">
+          <input
+            id="paymentLinkInput"
+            style="border:none;outline:none;width:100%;"
+            readonly
+          />
+          <span class="copy-btn" id="copyPaymentBtn">Copy</span>
+        </div>
+      </div>
+
+      <button class="btn btn-block" id="sendEmailBtn">
+        Send the Invoice via Email
+      </button>
+      <br />
+      <button class="btn btn-secondary btn-block" onclick="location.href='home.html'">
+        Back to Home
+      </button>
+    </div>
+
+    <script src="../payment_link.js"></script>
+  </body>
+  </html>

@@ -3,10 +3,11 @@ import { db } from "../configdb";
 import axios from "axios";
 import crypto from "crypto";
 import { generateInvoicePdf } from "../utils/pdf";
+import { sendInvoiceEmail } from "../utils/mailer";
 
-// Helper untuk generate payment link dummy
+// Helper untuk generate payment link dummy (mengandung kata \"paylabs\")
 const generatePaymentLink = (invoiceId: number | string) => {
-  return `https://pay.fufu.ai/invoice/${invoiceId}`;
+  return `https://paylabs.fufu.ai/invoice/${invoiceId}`;
 };
 
 // POST /invoice
@@ -32,8 +33,20 @@ export const createInvoice = async (req: Request, res: Response) => {
 
     const { items, totalAmount, suggestedDueDate } = aiResponse.data;
 
-    const subtotal = (items || []).reduce(
-      (acc: number, it: any) => acc + Number(it?.price || 0),
+    const normalizedItems = (items || []).map((it: any) => {
+      const qty = Number(it?.quantity || 1);
+      const unit = Number(it?.unitPrice || it?.price || 0);
+      const lineTotal = qty * unit;
+      return {
+        description: String(it?.description || "Item"),
+        quantity: qty,
+        unitPrice: unit,
+        lineTotal,
+      };
+    });
+
+    const subtotal = normalizedItems.reduce(
+      (acc: number, it: { lineTotal: any; }) => acc + Number(it.lineTotal || 0),
       0
     );
     const disc = Number(discount || 0);
@@ -50,7 +63,7 @@ export const createInvoice = async (req: Request, res: Response) => {
           userId,
           finalCompanyId,
           rawText,
-          JSON.stringify(items),
+          JSON.stringify(normalizedItems),
           grandTotal,
           disc,
           invoiceCode,
@@ -78,10 +91,7 @@ export const createInvoice = async (req: Request, res: Response) => {
             customerAddress,
             customerEmail,
             customerPhone: phone,
-            items: (items || []).map((it: any) => ({
-              description: String(it?.description || "Item"),
-              price: Number(it?.price || 0),
-            })),
+            items: normalizedItems,
             subtotal,
             discount: disc,
             dpp,
@@ -110,8 +120,10 @@ export const createInvoice = async (req: Request, res: Response) => {
                     discount: disc,
                     taxAmount,
                     totalAmount: grandTotal,
-                    items,
+                    items: normalizedItems,
                     suggestedDueDate,
+                    customerEmail,
+                    createdAtISO,
                   });
                 }
               );
@@ -196,7 +208,7 @@ export const createInvoice = async (req: Request, res: Response) => {
 // GET /invoice/status
 export const listInvoiceStatus = (req: Request, res: Response) => {
   db.query(
-    `SELECT i.id, i.invoice_code, i.created_at, c.name as company_name, c.email as company_email, i.status 
+    `SELECT i.id, i.invoice_code, i.created_at, i.due_date, c.name as company_name, c.email as company_email, i.status 
      FROM invoices i 
      JOIN companies c ON i.company_id = c.id
      ORDER BY i.created_at DESC`,
@@ -210,6 +222,61 @@ export const listInvoiceStatus = (req: Request, res: Response) => {
       res.json(result);
     }
   );
+};
+
+// POST /invoice/due-date
+export const setDueDate = (req: Request, res: Response) => {
+  const { invoiceId, dueDate } = req.body;
+  if (!invoiceId || !dueDate) {
+    return res.status(400).json({ message: "invoiceId dan dueDate wajib diisi" });
+  }
+
+  db.query(
+    "UPDATE invoices SET due_date = ? WHERE id = ?",
+    [dueDate, invoiceId],
+    (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Gagal mengupdate due date" });
+      }
+      res.json({ message: "Due date berhasil disimpan" });
+    }
+  );
+};
+
+// POST /invoice/send-email
+export const sendInvoiceEmailController = async (req: Request, res: Response) => {
+  try {
+    const { invoiceId, toEmail, paymentLink, pdfUrl } = req.body;
+
+    if (!invoiceId || !toEmail || !paymentLink) {
+      return res
+        .status(400)
+        .json({ message: "invoiceId, toEmail, dan paymentLink wajib diisi" });
+    }
+
+    const text = `Berikut adalah link pembayaran invoice Anda:\n\n${paymentLink}\n\nPDF Invoice: ${
+      pdfUrl || "tidak tersedia"
+    }`;
+
+    await sendInvoiceEmail({
+      to: toEmail,
+      subject: "Payment Link Invoice dari FUFU Paylabs",
+      text,
+      html: `<p>Berikut adalah link pembayaran invoice Anda:</p>
+             <p><a href="${paymentLink}">${paymentLink}</a></p>
+             ${
+               pdfUrl
+                 ? `<p>PDF Invoice: <a href="${pdfUrl}">${pdfUrl}</a></p>`
+                 : ""
+             }`,
+    });
+
+    res.json({ message: "Email invoice berhasil dikirim" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Gagal mengirim email invoice" });
+  }
 };
 
 // GET /companies/search?query=abc
